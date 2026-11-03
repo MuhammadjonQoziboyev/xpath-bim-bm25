@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+    <book id="B001">
+        <title>Artificial Intelligence: A Modern Approach</title>
+        <authors>
+            <author>Stuart Russell</author>
+            <author>Peter Norvig</author>
+        </authors>
+        <genre>Computer Science</genre>
+        <year>2021</year>
+        <publisher>
+            <name>Pearson</name>
+            <location>London, UK</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-0134610993</isbn>
+            <doi>10.1016/ai.2021.001</doi>
+        </identifiers>
+        <language>English</language>
+        <keywords>
+            <keyword>AI</keyword>
+            <keyword>Machine Learning</keyword>
+            <keyword>Intelligent Agents</keyword>
+        </keywords>
+        <summary>
+            Comprehensive and widely used academic textbook covering the theory and practice of artificial intelligence.
+        </summary>
+    </book>
+
+    <book id="B002">
+        <title>Deep Learning</title>
+        <authors>
+            <author>Ian Goodfellow</author>
+            <author>Yoshua Bengio</author>
+            <author>Aaron Courville</author>
+        </authors>
+        <genre>Machine Learning</genre>
+        <year>2016</year>
+        <publisher>
+            <name>MIT Press</name>
+            <location>Cambridge, USA</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-0262035613</isbn>
+            <doi>10.1016/dl.2016.002</doi>
+        </identifiers>
+        <language>English</language>
+        <keywords>
+            <keyword>Neural Networks</keyword>
+            <keyword>Deep Learning</keyword>
+        </keywords>
+        <summary>
+            Foundational graduate-level textbook explaining neural networks, mathematical foundations and modern deep learning methods.
+        </summary>
+    </book>
+
+    <book id="B003">
+        <title>Pattern Recognition and Machine Learning</title>
+        <authors>
+            <author>Christopher Bishop</author>
+        </authors>
+        <genre>Pattern Recognition</genre>
+        <year>2006</year>
+        <publisher>
+            <name>Springer</name>
+            <location>Berlin, Germany</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-0387310732</isbn>
+            <doi>10.1016/prml.2006.003</doi>
+        </identifiers>
+        <language>English</language>
+        <keywords>
+            <keyword>Probabilistic Models</keyword>
+            <keyword>Bayesian Methods</keyword>
+        </keywords>
+        <summary>
+            Graduate textbook covering probabilistic approaches to machine learning with emphasis on Bayesian methods.
+        </summary>
+    </book>
+
+    <book id="B004">
+        <title>Data Mining: Concepts and Techniques</title>
+        <authors>
+            <author>Jiawei Han</author>
+            <author>Micheline Kamber</author>
+            <author>Jian Pei</author>
+        </authors>
+        <genre>Data Mining</genre>
+        <year>2012</year>
+        <publisher>
+            <name>Morgan Kaufmann</name>
+            <location>San Francisco, USA</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-0123814791</isbn>
+            <doi>10.1016/dmct.2012.007</doi>
+        </identifiers>
+        <language>English</language>
+        <keywords>
+            <keyword>Data Mining</keyword>
+            <keyword>Big Data</keyword>
+        </keywords>
+        <summary>
+            Detailed introduction to data mining, data preprocessing, clustering, classification, and big data analytics.
+        </summary>
+    </book>
+
+    <book id="B005">
+        <title>Python for Data Analysis</title>
+        <authors>
+            <author>Wes McKinney</author>
+        </authors>
+        <genre>Programming</genre>
+        <year>2017</year>
+        <publisher>
+            <name>O’Reilly Media</name>
+            <location>Boston, USA</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-1491957660</isbn>
+            <doi>10.1016/pda.2017.004</doi>
+        </identifiers>
+        <language>English</language>
+        <keywords>
+            <keyword>Pandas</keyword>
+            <keyword>Data Analysis</keyword>
+        </keywords>
+        <summary>
+            Practical programming guide focusing on data processing and analysis in Python using pandas and NumPy.
+        </summary>
+    </book>
+
+    <book id="B006">
+        <title>Цифровая обработка изображений</title>
+        <authors>
+            <author>Гонсалес</author>
+            <author>Вудс</author>
+        </authors>
+        <genre>Image Processing</genre>
+        <year>2014</year>
+        <publisher>
+            <name>Техносфера</name>
+            <location>Москва, Россия</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-5496009077</isbn>
+            <doi>10.1016/dip.2014.011</doi>
+        </identifiers>
+        <language>Russian</language>
+        <keywords>
+            <keyword>Image Processing</keyword>
+            <keyword>Filters</keyword>
+            <keyword>Computer Vision</keyword>
+        </keywords>
+        <summary>
+            Академическое издание по обработке изображений, пространственным фильтрам, преобразованиям и анализу изображений.
+        </summary>
+    </book>
+
+    <book id="B007">
+        <title>Information Retrieval: Implementing and Evaluating Search Engines</title>
+        <authors>
+            <author>Stefan Büttcher</author>
+            <author>Charles Clarke</author>
+            <author>Gordon V. Cormack</author>
+        </authors>
+        <genre>Information Retrieval</genre>
+        <year>2016</year>
+        <publisher>
+            <name>MIT Press</name>
+            <location>Cambridge, USA</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-0262528870</isbn>
+            <doi>10.1016/ir.2016.013</doi>
+        </identifiers>
+        <language>English</language>
+        <keywords>
+            <keyword>Search Engines</keyword>
+            <keyword>IR Evaluation</keyword>
+            <keyword>Ranking Models</keyword>
+        </keywords>
+        <summary>
+            Technical and academic reference for building, indexing and evaluating search engines and ranking algorithms.
+        </summary>
+    </book>
+
+    <book id="B008">
+        <title>Machine Learning in Finance</title>
+        <authors>
+            <author>Shigeyuki Hamori</author>
+        </authors>
+        <genre>Finance</genre>
+        <year>2020</year>
+        <publisher>
+            <name>Springer</name>
+            <location>Tokyo, Japan</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-9811535618</isbn>
+            <doi>10.1016/mlf.2020.005</doi>
+        </identifiers>
+        <language>English</language>
+        <keywords>
+            <keyword>Finance</keyword>
+            <keyword>Machine Learning</keyword>
+        </keywords>
+        <summary>
+            Application of machine learning models for financial prediction, risk modeling and portfolio optimization.
+        </summary>
+    </book>
+</library>

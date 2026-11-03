@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XPath va Ehtimoliy IR — Mustaqil ish</title>
+<meta name="description" content="books.xml ustida XPath so'rovlari va BIM / BM25 ehtimoliy axborot qidiruv algoritmlari — interaktiv hisob-kitob.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1020;--bg2:#121933;--card:#161e3d;--line:#263057;--tx:#e8ecfa;--mut:#9aa6cf;--ac:#7c8cff;--ac2:#22d3ee;--ok:#34d399;--warn:#fbbf24;--code:#0a0f22}
+:root[data-theme=light]{--bg:#f5f7ff;--bg2:#eaeefc;--card:#fff;--line:#d9defa;--tx:#151a35;--mut:#59638f;--ac:#4f5bd5;--ac2:#0891b2;--ok:#059669;--warn:#b45309;--code:#f0f3ff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font:16px/1.6 Inter,system-ui,sans-serif;background:var(--bg);color:var(--tx)}
+body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(900px 500px at 10% -10%,color-mix(in srgb,var(--ac) 28%,transparent),transparent),radial-gradient(800px 500px at 100% 0,color-mix(in srgb,var(--ac2) 20%,transparent),transparent)}
+a{color:var(--ac2)}
+nav{position:sticky;top:0;z-index:10;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 80%,transparent);border-bottom:1px solid var(--line)}
+nav div{max-width:1100px;margin:auto;padding:10px 20px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+nav b{margin-right:auto;font-weight:800}
+nav a{text-decoration:none;color:var(--mut);font-size:14px;font-weight:500}nav a:hover{color:var(--tx)}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--tx);border-radius:10px;padding:6px 12px}
+main{max-width:1100px;margin:auto;padding:0 20px 80px}
+.hero{padding:70px 0 40px}
+.tag{display:inline-block;font-size:13px;font-weight:600;color:var(--ac2);border:1px solid var(--line);padding:4px 12px;border-radius:99px;background:var(--card)}
+h1{font-size:clamp(34px,6vw,60px);line-height:1.08;margin:18px 0;font-weight:800;letter-spacing:-.03em}
+h1 span{background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mut);max-width:680px;font-size:18px}
+.stats{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 20px}
+.stat b{font-size:26px;display:block}.stat small{color:var(--mut)}
+section{padding-top:60px}
+h2{font-size:30px;margin:0 0 6px;letter-spacing:-.02em}
+h2 i{font-style:normal;color:var(--ac);font-family:'JetBrains Mono',monospace;font-size:.7em;margin-right:8px}
+.sub{color:var(--mut);margin:0 0 24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px}
+.q{display:grid;gap:10px}
+.q h3{margin:0;font-size:17px;display:flex;gap:10px;align-items:flex-start}
+.q h3 em{flex:none;font-style:normal;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border-radius:8px;width:28px;height:28px;display:grid;place-items:center;font-size:14px}
+code,pre,input.mono{font-family:'JetBrains Mono',monospace}
+.xp{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:13.5px;color:var(--ac2);overflow-x:auto;white-space:nowrap}
+.res{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:color-mix(in srgb,var(--ok) 14%,transparent);border:1px solid color-mix(in srgb,var(--ok) 40%,transparent);padding:3px 12px;border-radius:99px;font-size:14px}
+.cnt{color:var(--mut);font-size:13px}
+.meta{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:4px 16px;font-size:14px;margin:0}
+.meta div{display:flex;flex-direction:column;border-left:2px solid var(--ac);padding-left:10px;margin:4px 0}
+.meta dt{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.05em}.meta dd{margin:0}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{background:var(--bg2);color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+td.n,th.n{text-align:right;font-family:'JetBrains Mono',monospace}
+tr:last-child td{border:0}
+tr.top td{background:color-mix(in srgb,var(--ok) 12%,transparent);font-weight:600}
+.f{background:var(--code);border:1px solid var(--line);border-radius:12px;padding:14px 18px;font-family:'JetBrains Mono',monospace;font-size:14px;overflow-x:auto;margin:10px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:800px){.grid2{grid-template-columns:1fr}}
+.bar{height:8px;border-radius:99px;background:var(--line);min-width:90px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2))}
+.win{display:flex;align-items:center;gap:14px;padding:16px;border-radius:14px;background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 22%,transparent),color-mix(in srgb,var(--ac2) 18%,transparent));border:1px solid var(--line);margin-top:14px}
+.win b{font-size:19px}
+input[type=text]{width:100%;font-size:15px;background:var(--code);border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:10px 12px}
+.ctrl{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+.ctrl label{font-size:14px;color:var(--mut);display:flex;gap:8px;align-items:center}
+.ctrl input[type=range]{accent-color:var(--ac)}
+.note{font-size:14px;color:var(--mut)}
+footer{text-align:center;color:var(--mut);padding:40px 20px;border-top:1px solid var(--line);font-size:14px}
+</style>
+</head>
+<body>
+<nav><div><b>◈ Mustaqil ish</b><a href="#xpath">XPath</a><a href="#ir">Ehtimoliy IR</a><a href="#bim">BIM</a><a href="#bm25">BM25</a><a href="#play">Sinov</a><button id="th" aria-label="Mavzu">🌓</button></div></nav>
+<main>
+<header class="hero">
+<span class="tag">Mini-loyiha · books.xml</span>
+<h1>XPath so‘rovlari va <span>ehtimoliy IR</span> (BIM / BM25)</h1>
+<p class="lead">Kutubxona XML fayli ustida 10 ta XPath so‘rovi brauzerda <b>jonli</b> bajariladi, “Machine Learning” so‘rovi uchun esa df, idf, BIM va BM25 ballari bosqichma-bosqich hisoblanadi.</p>
+<div class="stats" id="stats"></div>
+</header>
+
+<section id="xpath">
+<h2><i>01</i>XPath yordamida aniqlash</h2>
+<p class="sub">Har bir natija <code>document.evaluate()</code> orqali shu sahifadagi XML ustida real vaqtda olinadi.</p>
+<div id="xq"></div>
+</section>
+
+<section id="ir">
+<h2><i>02</i>Ehtimoliy IR: BIM va BM25</h2>
+<p class="sub">So‘rov: <b>Machine Learning</b> → termlar: <code>machine</code>, <code>learning</code></p>
+<div class="card">
+<b>Hujjat modeli.</b> Har bir kitob hujjati matni: <code>title + genre + keywords + summary</code> (muallif, nashriyot va identifikatorlar qidiruv matniga kirmaydi). Tokenizatsiya: kichik harf, harf bo‘lmagan belgilar bo‘yicha ajratish, stemming yo‘q.
+<div id="docs" class="tw" style="margin-top:12px"></div>
+</div>
+<h3>1) Termlarni aniqlash</h3>
+<div class="card" id="terms"></div>
+<h3>2) df va idf</h3>
+<div class="card">
+<div class="f">df(t) = t term uchragan hujjatlar soni<br>idf(t) = ln( (N − df + 0.5) / (df + 0.5) + 1 ) &nbsp;(Robertson–Spärck Jones, musbat shakl)<br>N = hujjatlar soni</div>
+<div class="tw" id="dfidf"></div>
+</div>
+</section>
+
+<section id="bim">
+<h2><i>03</i>BIM — Binary Independence Model</h2>
+<p class="sub">Relevantlik haqida ma’lumot bo‘lmaganda: p<sub>t</sub> = 0.5, u<sub>t</sub> ≈ df/N. Termlar binar (bor / yo‘q).</p>
+<div class="f">RSV(d,q) = Σ<sub>t∈q∩d</sub> c<sub>t</sub> , &nbsp;c<sub>t</sub> = ln( p<sub>t</sub>/(1−p<sub>t</sub>) · (1−u<sub>t</sub>)/u<sub>t</sub> ) ≈ idf(t)</div>
+<div class="card"><div class="tw" id="bimT"></div><div id="bimW"></div></div>
+</section>
+
+<section id="bm25">
+<h2><i>04</i>BM25</h2>
+<p class="sub">BIM ga term chastotasi (tf) va hujjat uzunligi normalizatsiyasi qo‘shilgan.</p>
+<div class="f">score(d,q) = Σ<sub>t∈q</sub> idf(t) · tf·(k₁+1) / ( tf + k₁·(1 − b + b·|d|/avgdl) )</div>
+<div class="card">
+<div class="ctrl"><label>k₁ <input type="range" id="k1" min="0" max="3" step="0.1" value="1.2"><b id="k1v">1.2</b></label><label>b <input type="range" id="b" min="0" max="1" step="0.05" value="0.75"><b id="bv">0.75</b></label><span class="note" id="avg"></span></div>
+<div class="tw" id="bmT"></div><div id="bmW"></div>
+</div>
+</section>
+
+<section id="play">
+<h2><i>05</i>Sinov maydoni</h2>
+<p class="sub">O‘zingizning XPath yoki IR so‘rovingizni sinab ko‘ring.</p>
+<div class="grid2">
+<div class="card"><b>XPath</b><div style="height:8px"></div><input type="text" class="mono" id="xin" value="//book[year>2015]/title"><div id="xout" class="res" style="margin-top:12px"></div></div>
+<div class="card"><b>IR so‘rovi</b><div style="height:8px"></div><input type="text" id="qin" value="Machine Learning"><div id="qout" style="margin-top:12px"></div></div>
+</div>
+</section>
+</main>
+<footer>Mustaqil ish · XPath 1.0 · BIM · BM25 — barcha hisob-kitoblar brauzerda bajariladi.</footer>
+
+<script type="text/xml" id="xml"><library>
+    <book id="B001">
+        <title>Artificial Intelligence: A Modern Approach</title>
+        <authors>
+            <author>Stuart Russell</author>
+            <author>Peter Norvig</author>
+        </authors>
+        <genre>Computer Science</genre>
+        <year>2021</year>
+        <publisher>
+            <name>Pearson</name>
+            <location>London, UK</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-0134610993</isbn>
+            <doi>10.1016/ai.2021.001</doi>
+        </identifiers>
+        <language>English</language>
+        <keywords>
+            <keyword>AI</keyword>
+            <keyword>Machine Learning</keyword>
+            <keyword>Intelligent Agents</keyword>
+        </keywords>
+        <summary>
+            Comprehensive and widely used academic textbook covering the theory and practice of artificial intelligence.
+        </summary>
+    </book>
+
+    <book id="B002">
+        <title>Deep Learning</title>
+        <authors>
+            <author>Ian Goodfellow</author>
+            <author>Yoshua Bengio</author>
+            <author>Aaron Courville</author>
+        </authors>
+        <genre>Machine Learning</genre>
+        <year>2016</year>
+        <publisher>
+            <name>MIT Press</name>
+            <location>Cambridge, USA</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-0262035613</isbn>
+            <doi>10.1016/dl.2016.002</doi>
+        </identifiers>
+        <language>English</language>
+        <keywords>
+            <keyword>Neural Networks</keyword>
+            <keyword>Deep Learning</keyword>
+        </keywords>
+        <summary>
+            Foundational graduate-level textbook explaining neural networks, mathematical foundations and modern deep learning methods.
+        </summary>
+    </book>
+
+    <book id="B003">
+        <title>Pattern Recognition and Machine Learning</title>
+        <authors>
+            <author>Christopher Bishop</author>
+        </authors>
+        <genre>Pattern Recognition</genre>
+        <year>2006</year>
+        <publisher>
+            <name>Springer</name>
+            <location>Berlin, Germany</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-0387310732</isbn>
+            <doi>10.1016/prml.2006.003</doi>
+        </identifiers>
+        <language>English</language>
+        <keywords>
+            <keyword>Probabilistic Models</keyword>
+            <keyword>Bayesian Methods</keyword>
+        </keywords>
+        <summary>
+            Graduate textbook covering probabilistic approaches to machine learning with emphasis on Bayesian methods.
+        </summary>
+    </book>
+
+    <book id="B004">
+        <title>Data Mining: Concepts and Techniques</title>
+        <authors>
+            <author>Jiawei Han</author>
+            <author>Micheline Kamber</author>
+            <author>Jian Pei</author>
+        </authors>
+        <genre>Data Mining</genre>
+        <year>2012</year>
+        <publisher>
+            <name>Morgan Kaufmann</name>
+            <location>San Francisco, USA</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-0123814791</isbn>
+            <doi>10.1016/dmct.2012.007</doi>
+        </identifiers>
+        <language>English</language>
+        <keywords>
+            <keyword>Data Mining</keyword>
+            <keyword>Big Data</keyword>
+        </keywords>
+        <summary>
+            Detailed introduction to data mining, data preprocessing, clustering, classification, and big data analytics.
+        </summary>
+    </book>
+
+    <book id="B005">
+        <title>Python for Data Analysis</title>
+        <authors>
+            <author>Wes McKinney</author>
+        </authors>
+        <genre>Programming</genre>
+        <year>2017</year>
+        <publisher>
+            <name>O’Reilly Media</name>
+            <location>Boston, USA</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-1491957660</isbn>
+            <doi>10.1016/pda.2017.004</doi>
+        </identifiers>
+        <language>English</language>
+        <keywords>
+            <keyword>Pandas</keyword>
+            <keyword>Data Analysis</keyword>
+        </keywords>
+        <summary>
+            Practical programming guide focusing on data processing and analysis in Python using pandas and NumPy.
+        </summary>
+    </book>
+
+    <book id="B006">
+        <title>Цифровая обработка изображений</title>
+        <authors>
+            <author>Гонсалес</author>
+            <author>Вудс</author>
+        </authors>
+        <genre>Image Processing</genre>
+        <year>2014</year>
+        <publisher>
+            <name>Техносфера</name>
+            <location>Москва, Россия</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-5496009077</isbn>
+            <doi>10.1016/dip.2014.011</doi>
+        </identifiers>
+        <language>Russian</language>
+        <keywords>
+            <keyword>Image Processing</keyword>
+            <keyword>Filters</keyword>
+            <keyword>Computer Vision</keyword>
+        </keywords>
+        <summary>
+            Академическое издание по обработке изображений, пространственным фильтрам, преобразованиям и анализу изображений.
+        </summary>
+    </book>
+
+    <book id="B007">
+        <title>Information Retrieval: Implementing and Evaluating Search Engines</title>
+        <authors>
+            <author>Stefan Büttcher</author>
+            <author>Charles Clarke</author>
+            <author>Gordon V. Cormack</author>
+        </authors>
+        <genre>Information Retrieval</genre>
+        <year>2016</year>
+        <publisher>
+            <name>MIT Press</name>
+            <location>Cambridge, USA</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-0262528870</isbn>
+            <doi>10.1016/ir.2016.013</doi>
+        </identifiers>
+        <language>English</language>
+        <keywords>
+            <keyword>Search Engines</keyword>
+            <keyword>IR Evaluation</keyword>
+            <keyword>Ranking Models</keyword>
+        </keywords>
+        <summary>
+            Technical and academic reference for building, indexing and evaluating search engines and ranking algorithms.
+        </summary>
+    </book>
+
+    <book id="B008">
+        <title>Machine Learning in Finance</title>
+        <authors>
+            <author>Shigeyuki Hamori</author>
+        </authors>
+        <genre>Finance</genre>
+        <year>2020</year>
+        <publisher>
+            <name>Springer</name>
+            <location>Tokyo, Japan</location>
+        </publisher>
+        <identifiers>
+            <isbn>978-9811535618</isbn>
+            <doi>10.1016/mlf.2020.005</doi>
+        </identifiers>
+        <language>English</language>
+        <keywords>
+            <keyword>Finance</keyword>
+            <keyword>Machine Learning</keyword>
+        </keywords>
+        <summary>
+            Application of machine learning models for financial prediction, risk modeling and portfolio optimization.
+        </summary>
+    </book>
+</library>
+</script>
+<script>
+const xmlText=document.getElementById('xml').textContent.trim();
+const doc=new DOMParser().parseFromString(xmlText,'application/xml');
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function xp(expr){
+  const r=doc.evaluate(expr,doc,null,XPathResult.ANY_TYPE,null),out=[];
+  if(r.resultType===XPathResult.NUMBER_TYPE)return[String(r.numberValue)];
+  if(r.resultType===XPathResult.STRING_TYPE)return[r.stringValue];
+  if(r.resultType===XPathResult.BOOLEAN_TYPE)return[String(r.booleanValue)];
+  let n;while(n=r.iterateNext())out.push(n);return out;
+}
+const books=[...doc.querySelectorAll('book')];
+$('#stats').innerHTML=[[books.length,'kitob'],[10,'XPath so‘rov'],[2,'IR algoritm']].map(([a,b])=>`<div class="stat"><b>${a}</b><small>${b}</small></div>`).join('');
+
+const Q=[
+["Tili (language) English bo‘lgan kitoblarning nomi","//book[language='English']/title"],
+["2018-yildan keyin chop etilgan kitoblarning mualliflari","//book[year>2018]/authors/author"],
+["Publisher joylashuvi Cambridge bo‘lgan kitoblar","//book[publisher/location='Cambridge, USA']/title"],
+["Kalit so‘zi “Machine Learning” bo‘lgan kitoblar","//book[keywords/keyword='Machine Learning']/title"],
+["2 yoki undan ko‘p muallifli kitoblar","//book[count(authors/author)>=2]/title"],
+["DOI mavjud kitoblarning ISBN raqamlari","//book[identifiers/doi]/identifiers/isbn"],
+["Janri “Information Retrieval” bo‘lgan kitobning barcha metadata qismi","//book[genre='Information Retrieval']/*"],
+["Summary da “Python” so‘zi bor kitoblar","//book[contains(summary, 'Python')]/title"],
+["3 ta yoki undan ko‘p keyword bor kitoblar","//book[count(keywords/keyword)>=3]/title"],
+["ID si B003 bo‘lgan kitobning muallif(lar)i","//book[@id='B003']/authors/author"]];
+function renderNodes(nodes,meta){
+  if(!nodes.length)return '<span class="cnt">Natija topilmadi</span>';
+  if(meta)return '<dl class="meta">'+nodes.map(n=>`<div><dt>${n.nodeName}</dt><dd>${esc(n.textContent.replace(/\s+/g,' ').trim())}</dd></div>`).join('')+'</dl>';
+  return nodes.map(n=>`<span class="chip">${esc(n.textContent.trim())}</span>`).join('');
+}
+$('#xq').innerHTML=Q.map(([t,e],i)=>{
+  let nodes=[];try{nodes=xp(e)}catch(x){}
+  return `<div class="card q"><h3><em>${i+1}</em>${t}</h3><div class="xp">${esc(e)}</div><div class="res" style="display:block">${renderNodes(nodes,e.endsWith('/*'))}</div><div class="cnt">${nodes.length} ta natija</div></div>`}).join('');
+
+/* ---------- IR ---------- */
+const tok=s=>(s.toLowerCase().match(/\p{L}+/gu)||[]);
+const txt=(b,p)=>b.querySelector(p)?.textContent.trim()||'';
+const D=books.map(b=>{
+  const text=[txt(b,'title'),txt(b,'genre'),[...b.querySelectorAll('keyword')].map(k=>k.textContent).join(' '),txt(b,'summary')].join(' ');
+  return{id:b.getAttribute('id'),title:txt(b,'title'),tokens:tok(text)};
+});
+const N=D.length,avgdl=D.reduce((s,d)=>s+d.tokens.length,0)/N;
+const f=(x,n=4)=>x.toFixed(n);
+function analyse(query,k1,b){
+  const terms=[...new Set(tok(query))];
+  const df={},idf={};
+  terms.forEach(t=>{df[t]=D.filter(d=>d.tokens.includes(t)).length;idf[t]=Math.log((N-df[t]+.5)/(df[t]+.5)+1)});
+  const rows=D.map(d=>{
+    const tf={};terms.forEach(t=>tf[t]=d.tokens.filter(x=>x===t).length);
+    const bim=terms.reduce((s,t)=>s+(tf[t]>0?idf[t]:0),0);
+    const bm=terms.reduce((s,t)=>s+idf[t]*tf[t]*(k1+1)/(tf[t]+k1*(1-b+b*d.tokens.length/avgdl)),0);
+    return{...d,len:d.tokens.length,tf,bim,bm};
+  });
+  return{terms,df,idf,rows};
+}
+const rank=(rows,key)=>[...rows].sort((a,c)=>c[key]-a[key]||a.id.localeCompare(c.id));
+const medal=i=>i<3?['🥇','🥈','🥉'][i]:i+1;
+
+function table(head,body){return `<table><thead><tr>${head.map(h=>`<th class="${h[1]?'n':''}">${h[0]}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table>`}
+function rankTable(rows,key,terms){
+  const sorted=rank(rows,key),top=sorted[0][key];
+  return table([['#',1],['ID'],['Kitob'],['|d|',1],...terms.map(t=>['tf('+t+')',1]),['Ball',1],['']],
+   sorted.map((r,i)=>`<tr class="${i==0&&top>0?'top':''}"><td class="n">${medal(i)}</td><td>${r.id}</td><td>${esc(r.title)}</td><td class="n">${r.len}</td>${terms.map(t=>`<td class="n">${r.tf[t]}</td>`).join('')}<td class="n">${f(r[key])}</td><td><div class="bar"><i style="width:${top?r[key]/top*100:0}%"></i></div></td></tr>`).join(''));
+}
+function winner(rows,key){const w=rank(rows,key)[0];return `<div class="win"><span style="font-size:30px">🏆</span><div><small class="note">Eng mos kitob</small><br><b>${w.id} — ${esc(w.title)}</b> <span class="note">(ball: ${f(w[key])})</span></div></div>`}
+
+$('#docs').innerHTML=table([['ID'],['Kitob'],['|d| (token)',1]],D.map(d=>`<tr><td>${d.id}</td><td>${esc(d.title)}</td><td class="n">${d.tokens.length}</td></tr>`).join(''));
+
+function renderIR(){
+  const k1=+$('#k1').value,b=+$('#b').value;
+  $('#k1v').textContent=k1;$('#bv').textContent=b;
+  const a=analyse('Machine Learning',k1,b);
+  $('#terms').innerHTML=`So‘rov <b>“Machine Learning”</b> → termlar: ${a.terms.map(t=>`<span class="chip">${t}</span>`).join(' ')}`;
+  $('#dfidf').innerHTML=table([['Term'],['df',1],['N',1],['(N−df+0.5)/(df+0.5)',1],['idf',1],['Uchragan hujjatlar']],
+    a.terms.map(t=>`<tr><td><b>${t}</b></td><td class="n">${a.df[t]}</td><td class="n">${N}</td><td class="n">${f((N-a.df[t]+.5)/(a.df[t]+.5))}</td><td class="n">${f(a.idf[t])}</td><td>${D.filter(d=>d.tokens.includes(t)).map(d=>d.id).join(', ')}</td></tr>`).join(''));
+  $('#bimT').innerHTML=rankTable(a.rows,'bim',a.terms);$('#bimW').innerHTML=winner(a.rows,'bim');
+  $('#bmT').innerHTML=rankTable(a.rows,'bm',a.terms);$('#bmW').innerHTML=winner(a.rows,'bm');
+  $('#avg').textContent=`avgdl = ${f(avgdl,2)} · N = ${N}`;
+  runQ();
+}
+['k1','b'].forEach(i=>$('#'+i).addEventListener('input',renderIR));
+
+/* ---------- playground ---------- */
+function runX(){
+  try{const r=xp($('#xin').value);$('#xout').innerHTML=r.length?(typeof r[0]==='string'?`<span class="chip">${esc(r[0])}</span>`:renderNodes(r,false)+`<div class="cnt" style="width:100%">${r.length} ta natija</div>`):'<span class="cnt">Natija yo‘q</span>'}
+  catch(e){$('#xout').innerHTML='<span class="cnt" style="color:var(--warn)">Xato: noto‘g‘ri XPath</span>'}
+}
+function runQ(){
+  const a=analyse($('#qin').value,+$('#k1').value,+$('#b').value);
+  if(!a.terms.length){$('#qout').innerHTML='';return}
+  const s=rank(a.rows,'bm').slice(0,3),s2=rank(a.rows,'bim')[0];
+  $('#qout').innerHTML=`<div class="note">Termlar: ${a.terms.map(t=>`${esc(t)} (df=${a.df[t]})`).join(', ')}</div><div class="note">BIM: <b style="color:var(--ok)">${s2.id}</b> · BM25 top-3:</div>`+s.map((r,i)=>`<div>${medal(i)} <b>${r.id}</b> ${esc(r.title)} <span class="note">${f(r.bm)}</span></div>`).join('');
+}
+$('#xin').addEventListener('input',runX);$('#qin').addEventListener('input',runQ);runX();renderIR();
+
+/* theme */
+const root=document.documentElement;
+try{const s=localStorage.getItem('t');if(s)root.dataset.theme=s}catch(e){}
+$('#th').onclick=()=>{const n=(root.dataset.theme||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'))==='dark'?'light':'dark';root.dataset.theme=n;try{localStorage.setItem('t',n)}catch(e){}};
+</script>
+</body>
+</html>
