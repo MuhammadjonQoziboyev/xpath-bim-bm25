@@ -403,7 +403,7 @@ function rankTable(rows,key,terms){
   return table([['#',1],['ID'],['Kitob'],['|d|',1],...terms.map(t=>['tf('+t+')',1]),['Ball',1],['']],
    sorted.map((r,i)=>`<tr class="${i==0&&top>0?'top':''}"><td class="n">${medal(i)}</td><td>${r.id}</td><td>${esc(r.title)}</td><td class="n">${r.len}</td>${terms.map(t=>`<td class="n">${r.tf[t]}</td>`).join('')}<td class="n">${f(r[key])}</td><td><div class="bar"><i style="width:${top?r[key]/top*100:0}%"></i></div></td></tr>`).join(''));
 }
-function winner(rows,key){const w=rank(rows,key)[0];return `<div class="win"><span style="font-size:30px">🏆</span><div><small class="note">Eng mos kitob</small><br><b>${w.id} — ${esc(w.title)}</b> <span class="note">(ball: ${f(w[key])})</span></div></div>`}
+function winner(rows,key){const s=rank(rows,key),ws=s.filter(r=>Math.abs(r[key]-s[0][key])<1e-9);return `<div class="win"><span style="font-size:30px">🏆</span><div><small class="note">${ws.length>1?'Teng ball ('+ws.length+' ta kitob) — BIM term chastotasini hisobga olmaydi':'Eng mos kitob'}</small><br>${ws.map(w=>`<b>${w.id} — ${esc(w.title)}</b>`).join('<br>')}<span class="note"> (ball: ${f(s[0][key])})</span></div></div>`}
 
 $('#docs').innerHTML=table([['ID'],['Kitob'],['|d| (token)',1]],D.map(d=>`<tr><td>${d.id}</td><td>${esc(d.title)}</td><td class="n">${d.tokens.length}</td></tr>`).join(''));
 
